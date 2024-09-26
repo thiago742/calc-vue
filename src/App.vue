@@ -1,47 +1,71 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, computed } from 'vue';
+
+const num1 = ref(0);
+const num2 = ref(0);
+const op = ref('soma');
+
+const result = computed(() => {
+  switch (op.value) {
+    case 'soma': return num1.value + num2.value;
+    case 'subtracao': return num1.value - num2.value;
+    case 'multiplicacao': return num1.value * num2.value;
+    case 'divisao': return num2.value !== 0 ? num1.value / num2.value: 'não divide por zero.';
+    default: return 0;
+  }
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+  <div class="container">
 
-  <main>
-    <TheWelcome />
-  </main>
+    <h1>Calculadora Aritmética</h1>
+
+    <input type="number" v-model.number="num1" placeholder="Digite o 1º número" />
+    <input type="number" v-model.number="num2" placeholder="Digite o 2º número" />
+
+    <select v-model="op">
+      <option value="soma">+</option>
+      <option value="subtracao">-</option>
+      <option value="multiplicacao">*</option>
+      <option value="divisao">/</option>
+    </select>
+
+    <h2>Resultado: {{ result }}</h2>
+
+  </div>
+
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.container {
+  text-align: center;
+  max-width: 300px;
+  margin-top: 10%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #318499;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+h1, h2 {
+  color: white;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+input {
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 </style>
